@@ -38,7 +38,7 @@ async def upload_csv(file: UploadFile = File(...)):
                         date_val = row[5]
                         dealer_id_val = int(row[6])
                     except (ValueError, IndexError):
-                        logger.error(f"Ошибка в строке: {row}", exc_info=True)
+                        logger.error(f'Ошибка в строке: {row}', exc_info=True)
                         continue
             # csv_reader = csv.reader(StringIO(content), delimiter=';')
             # db = SessionLocal()
