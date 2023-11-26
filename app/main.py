@@ -21,7 +21,8 @@ async def upload_csv(file: UploadFile = File(...)):
             content = await file.read()
             content = content.decode('utf-8')
 
-            csv_data = pd.read_csv(StringIO(content), delimiter=';', header=None)
+            csv_data = pd.read_csv(StringIO(content), delimiter=';',
+                                   header=None)
             db = SessionLocal()
             try:
                 csv_data = csv_data.iloc[1:]
