@@ -29,3 +29,8 @@ websockets = "==12.0"
 
 [requires]
 python_version = "3.9"
+fastapi = "*"
+
+[dev-packages]
+pre-commit = "*"
+
