@@ -5,11 +5,11 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-sqlalchemy = "*"
 asyncpg = "*"
 fastapi-users = {extras = ["sqlalchemy"], version = "*"}
 alembic = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+sqlalchemy = {extras = ["asyncio"], version = "*"}
 
 [dev-packages]
 pre-commit = "*"
