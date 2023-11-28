@@ -12,23 +12,10 @@ DEBUG = True
 
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    'django-insecure-&7&0zf(_yb06qde1(o85!yh3sx$7lw*%fmq0huiwb-9tj80o%('
-)
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = ['*']
-
 
 # integer constants
 MAX_NAME_LENGTH = 254
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,11 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-
-    # 'api.v1.apps.ApiConfig',
-    # 'dealers.apps.DealersConfig',
-    # 'owner.apps.OwnerConfig',
-
+    'api.v1.apps.ApiConfig',
+    'dealers.apps.DealersConfig',
+    'owner.apps.OwnerConfig',
     'django.contrib.staticfiles',
     'drf_yasg',
 
