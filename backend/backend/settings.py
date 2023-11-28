@@ -13,7 +13,7 @@ DEBUG = True
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split()
 
 # integer constants
-EMAIL_MAX_LENGTH = 254
+MAX_NAME_LENGTH = 254
 
 
 INSTALLED_APPS = [
@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'api.apps.ApiConfig',
+    'api.v1.apps.ApiConfig',
     'dealers.apps.DealersConfig',
     'owner.apps.OwnerConfig',
 ]
@@ -64,7 +64,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
   'default': {
        'ENGINE': 'django.db.backends.postgresql',
-       'NAME': os.getenv('POSTGRES_DB', 'postgres'),
+       'NAME': os.getenv('POSTGRES_DB', 'prosept'),
        'USER': os.getenv('POSTGRES_USER', 'postgres'),
        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
        'HOST': os.getenv('DB_HOST', 'localhost'),
@@ -107,9 +107,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
