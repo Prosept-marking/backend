@@ -3,16 +3,23 @@ from django.conf import settings
 
 
 class DealersNames(models.Model):
-    """Перечень Дилеров"""
+    """Перечень Дилеров."""
     name = models.CharField(
             'Наименование Дилера',
             unique=True,
             max_length=settings.MAX_NAME_LENGTH,
     )
 
+    class Meta:
+        verbose_name = 'Наименование дилера'
+        verbose_name_plural = 'Перечень дилеров'
+
+    def __str__(self):
+        return self.name
+
 
 class DealersProducts(models.Model):
-    """Товары всех дилеров"""
+    """Товары всех дилеров."""
     dealer_id = models.ForeignKey(
             DealersNames,
             verbose_name='ID дилера',
