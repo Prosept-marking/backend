@@ -4,13 +4,17 @@ from django.conf import settings
 
 class DealersNames(models.Model):
     """Перечень Дилеров."""
+    dealer_id = models.IntegerField(
+        default=0
+    )
     name = models.CharField(
-            'Наименование Дилера',
-            unique=True,
-            max_length=settings.MAX_NAME_LENGTH,
+        'Наименование Дилера',
+        unique=True,
+        max_length=settings.MAX_NAME_LENGTH,
     )
 
     class Meta:
+        ordering = ('dealer_id',)
         verbose_name = 'Наименование дилера'
         verbose_name_plural = 'Перечень дилеров'
 
@@ -21,14 +25,14 @@ class DealersNames(models.Model):
 class DealersProducts(models.Model):
     """Товары всех дилеров."""
     dealer_id = models.ForeignKey(
-            DealersNames,
-            verbose_name='ID дилера',
-            on_delete=models.CASCADE,
-            related_name='dealer',
+        DealersNames,
+        verbose_name='ID дилера',
+        on_delete=models.CASCADE,
+        related_name='dealer',
     )
     product_key = models.CharField(
-            'Ключ(id) товара дилера',
-            max_length=settings.MAX_NAME_LENGTH,
+        'Ключ(id) товара дилера',
+        max_length=settings.MAX_NAME_LENGTH,
     )
     price = models.DecimalField(
         'Цена дилера',
@@ -42,9 +46,9 @@ class DealersProducts(models.Model):
         max_length=settings.MAX_NAME_LENGTH,
     )
     product_name = models.CharField(
-            'Наименование товара дилера',
-            unique=True,
-            max_length=settings.MAX_NAME_LENGTH,
+        'Наименование товара дилера',
+        unique=True,
+        max_length=settings.MAX_NAME_LENGTH,
     )
     date = models.CharField(
         'date',

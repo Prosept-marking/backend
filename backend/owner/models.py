@@ -4,11 +4,14 @@ from django.conf import settings
 
 class OwnerProducts(models.Model):
     """Товары производителя Просепт."""
+    owner_id = models.IntegerField(default=0)
     article = models.CharField(
         'Артикул',
         max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
     )
-    ean_13 = models.IntegerField(
+    ean_13 = models.CharField(
         'European Article Number',
         null=True,
         blank=True,
@@ -16,6 +19,8 @@ class OwnerProducts(models.Model):
     name_1c = models.CharField(
         'Наименование товара Просепт в 1С',
         max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
     )
     cost = models.DecimalField(
         'Цена',
@@ -31,7 +36,7 @@ class OwnerProducts(models.Model):
         null=True,
         blank=True,
     )
-    category_id = models.IntegerField(
+    category_id = models.CharField(
         'ID категории',
         null=True,
         blank=True,
