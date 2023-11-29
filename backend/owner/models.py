@@ -58,7 +58,7 @@ class ProductRelation(models.Model):
     dealer_product = models.ForeignKey(
         DealersProducts,
         on_delete=models.CASCADE,
-        verbose_name='Товар дилепа',
+        verbose_name='Товар дилера',
     )
     owner_product = models.ForeignKey(
         OwnerProducts,
