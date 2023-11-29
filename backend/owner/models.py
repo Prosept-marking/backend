@@ -17,6 +17,12 @@ class OwnerProducts(models.Model):
         null=True,
         blank=True,
     )
+    name = models.CharField(
+        'Наименование товара',
+        max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
     name_1c = models.CharField(
         'Наименование товара Просепт в 1С',
         max_length=settings.MAX_NAME_LENGTH,
@@ -39,6 +45,42 @@ class OwnerProducts(models.Model):
     )
     category_id = models.CharField(
         'ID категории',
+        null=True,
+        blank=True,
+    )
+    ozon_name = models.CharField(
+        'Наименование товара в OZON',
+        max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
+    wb_name = models.CharField(
+        'Наименование товара в WB',
+        max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
+    ozon_article = models.CharField(
+        'Артикул OZON',
+        max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
+    wb_article = models.CharField(
+        'Артикул WB',
+        max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
+    ym_article = models.CharField(
+        'Артикул YM',
+        max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
+    wb_article_td = models.CharField(
+        'Артикул WB_TD',
+        max_length=settings.MAX_NAME_LENGTH,
         null=True,
         blank=True,
     )
