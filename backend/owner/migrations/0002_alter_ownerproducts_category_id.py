@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ownerproducts',
             name='category_id',
-            field=models.CharField(blank=True, null=True, verbose_name='ID категории'),
+            field=models.CharField(blank=True, null=True,
+                                   verbose_name='ID категории'),
         ),
     ]

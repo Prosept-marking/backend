@@ -1,7 +1,6 @@
 import csv
 
 from django.core.management.base import BaseCommand
-
 from owner.models import OwnerProducts
 
 
@@ -10,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         csv_file = 'data/marketing_product.csv'
-        with open(csv_file, 'r', encoding='utf-8') as file:
+        with open(csv_file, encoding='utf-8') as file:
             csv_reader = csv.reader(file, delimiter=';')
             next(csv_reader)
             for row in csv_reader:
