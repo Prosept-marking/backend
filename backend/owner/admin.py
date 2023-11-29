@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import OwnerProducts
 
 
@@ -16,6 +17,3 @@ class OwnerProductsAdmin(admin.ModelAdmin):
     search_fields = ('name_1c', 'ean_13', 'article')
     list_filter = ('name_1c', 'ean_13', 'article')
     empty_value_display = '-пусто-'
-
-
-

@@ -1,8 +1,7 @@
 import csv
 
-from django.core.management.base import BaseCommand
-
 from dealers.models import DealersNames
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -10,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         csv_file = 'data/marketing_dealer.csv'
-        with open(csv_file, 'r', encoding='utf-8') as file:
+        with open(csv_file, encoding='utf-8') as file:
             csv_reader = csv.reader(file, delimiter=';')
             next(csv_reader)
             for row in csv_reader:

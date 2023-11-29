@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ownerproducts',
             name='ean_13',
-            field=models.CharField(blank=True, null=True, verbose_name='European Article Number'),
+            field=models.CharField(blank=True, null=True,
+                                   verbose_name='European Article Number'),
         ),
     ]

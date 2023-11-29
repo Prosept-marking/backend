@@ -14,13 +14,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OwnerProducts',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('article', models.CharField(max_length=254, verbose_name='Артикул')),
-                ('ean_13', models.IntegerField(blank=True, null=True, verbose_name='European Article Number')),
-                ('name_1c', models.CharField(max_length=254, verbose_name='Наименование товара Просепт в 1С')),
-                ('cost', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Цена')),
-                ('recommended_price', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, verbose_name='Рекомендуемая стоимость')),
-                ('category_id', models.IntegerField(blank=True, null=True, verbose_name='ID категории')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('article', models.CharField(max_length=254, verbose_name='Артикул')),  # noqa
+                ('ean_13', models.IntegerField(blank=True,
+                 null=True, verbose_name='European Article Number')),
+                ('name_1c', models.CharField(max_length=254,
+                 verbose_name='Наименование товара Просепт в 1С')),
+                ('cost', models.DecimalField(blank=True, decimal_places=2,
+                 max_digits=10, null=True, verbose_name='Цена')),
+                ('recommended_price', models.DecimalField(blank=True, decimal_places=2,  # noqa
+                 max_digits=10, null=True, verbose_name='Рекомендуемая стоимость')),  # noqa
+                ('category_id', models.IntegerField(
+                    blank=True, null=True, verbose_name='ID категории')),
             ],
             options={
                 'verbose_name': 'Товар Просепт',
