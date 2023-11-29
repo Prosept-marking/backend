@@ -17,7 +17,6 @@ class Command(BaseCommand):
                 ean_13 = row[3]
                 cost = row[5] if row[5] else None
                 recommended_price = row[6] if row[6] else None
-                print(row[5], row[6])
                 owner, created = OwnerProducts.objects.get_or_create(
                     owner_id=row[0],
                     article=row[2],
