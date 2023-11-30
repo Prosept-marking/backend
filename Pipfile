@@ -9,6 +9,7 @@ psycopg2-binary = "*"
 drf-yasg = "*"
 pandas = "==2.1.3"
 scikit-learn = "==1.3.2"
+django-filter = "*"
 
 [dev-packages]
 pre-commit = "*"

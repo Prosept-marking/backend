@@ -1,5 +1,5 @@
 from dealers.models import DealersNames, DealersProducts
-from owner.models import OwnerProducts
+from owner.models import OwnerProducts, ProductRelation
 from rest_framework import serializers
 
 
@@ -28,6 +28,20 @@ class OwnerProductsSerializer(serializers.ModelSerializer):
         fields = (
             'pk', 'owner_id',
             'article', 'ean_13',
-            'name_1c', 'cost',
-            'recommended_price', 'category_id',
+            'name', 'name_1c',
+            'cost', 'recommended_price',
+            'category_id', 'ozon_name',
+            'wb_name', 'ozon_article',
+            'wb_article', 'ym_article',
+            'wb_article_td'
+        )
+
+
+class ProductRelationSerializer(serializers.Serializer):
+    class Meta:
+        model = ProductRelation
+        fields = (
+            'pk', 'dealer_product',
+            'owner_product', 'matched',
+            'date'
         )
