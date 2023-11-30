@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'owner.apps.OwnerConfig',
     'django.contrib.staticfiles',
     'drf_yasg',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
