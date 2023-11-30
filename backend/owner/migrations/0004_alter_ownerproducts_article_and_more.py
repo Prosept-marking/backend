@@ -13,11 +13,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ownerproducts',
             name='article',
-            field=models.CharField(blank=True, max_length=254, null=True, verbose_name='Артикул'),
+            field=models.CharField(
+                blank=True, max_length=254, null=True, verbose_name='Артикул'),
         ),
         migrations.AlterField(
             model_name='ownerproducts',
             name='name_1c',
-            field=models.CharField(blank=True, max_length=254, null=True, verbose_name='Наименование товара Просепт в 1С'),
+            field=models.CharField(blank=True, max_length=254, null=True,
+                                   verbose_name='Наименование товара Просепт в 1С'),  # noqa
         ),
     ]
