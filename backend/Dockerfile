@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY Pipfile.lock Pipfile ./
+COPY ../Pipfile.lock ../Pipfile ./
 
 RUN apt-get update && apt-get install -y gunicorn
 
