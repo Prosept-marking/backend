@@ -30,6 +30,9 @@ class OwnerProductsViewSet(viewsets.ModelViewSet):
             dealer_product = DealersProducts.objects.get(id=dealer_product_id)
             name = dealer_product.product_name
             matched_products = matching(name)
-            return Response(matched_products)
+            products = OwnerProducts.objects.filter(
+                name_1c__in=matched_products).values()
+            serializer = OwnerProductsSerializer(products, many=True)
+            return Response(serializer.data)
         else:
             return Response('No id')

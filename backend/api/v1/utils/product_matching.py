@@ -37,6 +37,7 @@ def prepare_data():
     data_product = data_product.drop(['index'], axis=1)
     # normalizing name product in main base
     data_product['clear_name'] = data_product['name_1c'].apply(clear_text)
+
     return data_product
 
 
@@ -77,5 +78,4 @@ def matching(query):
     for i in range(len(neighbors)):
         for j in neighbors[i]:
             result_matching.append(data_product.iloc[j]['name_1c'])
-
     return result_matching
