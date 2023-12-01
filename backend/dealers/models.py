@@ -47,7 +47,6 @@ class DealersProducts(models.Model):
     )
     product_name = models.CharField(
         'Наименование товара дилера',
-        unique=True,
         max_length=settings.MAX_NAME_LENGTH,
     )
     date = models.CharField(

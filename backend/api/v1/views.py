@@ -2,10 +2,13 @@ from dealers.models import DealersNames, DealersProducts
 from django_filters.rest_framework import DjangoFilterBackend
 from owner.models import OwnerProducts, ProductRelation
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .paginators import LimitPageNumberPagination
 from .serializers import (DelearNamesSerializer, DelearProductsSerializer,
                           OwnerProductsSerializer, ProductRelationSerializer)
+from .utils.product_matching import matching
 
 
 class DealerNamesViewSet(viewsets.ModelViewSet):
@@ -42,6 +45,18 @@ class OwnerProductsViewSet(viewsets.ModelViewSet):
         'ozon_article', 'wb_article',
         'ym_article', 'wb_article_td'
     )
+
+    
+    @action(detail=False, methods=['GET'])
+    def match_product(self, request):
+        dealer_product_id = request.query_params.get('id')
+        if dealer_product_id:
+            dealer_product = DealersProducts.objects.get(id=dealer_product_id)
+            name = dealer_product.product_name
+            matched_products = matching(name)
+            return Response(matched_products)
+        else:
+            return Response('No id')
 
 
 class ProductRelationViewSet(viewsets.ModelViewSet):
