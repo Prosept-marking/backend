@@ -46,7 +46,6 @@ class OwnerProductsViewSet(viewsets.ModelViewSet):
         'ym_article', 'wb_article_td'
     )
 
-    
     @action(detail=False, methods=['GET'])
     def match_product(self, request):
         dealer_product_id = request.query_params.get('id')
