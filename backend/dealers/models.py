@@ -54,6 +54,7 @@ class DealersProducts(models.Model):
         max_length=10,
         help_text='Format: YYYY-MM-DD',
     )
+    real_date = models.DateField(auto_now=True)
     matched = models.BooleanField(
         'Согласованный',
         default=False,
