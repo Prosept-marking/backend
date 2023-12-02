@@ -6,6 +6,7 @@ from .models import OwnerProducts, ProductRelation
 @admin.register(OwnerProducts)
 class OwnerProductsAdmin(admin.ModelAdmin):
     list_display = (
+        'pk',
         'owner_id',
         'name_1c',
         'article',

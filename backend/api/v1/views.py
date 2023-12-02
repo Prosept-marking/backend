@@ -23,9 +23,9 @@ class OwnerProductsViewSet(viewsets.ModelViewSet):
     queryset = OwnerProducts.objects.all()
     serializer_class = OwnerProductsSerializer
 
-    @action(detail=False, methods=['GET'])
-    def match_product(self, request):
-        dealer_product_id = request.query_params.get('id')
+    @action(detail=False, methods=['GET'],
+            url_path=r'match_product/(?P<dealer_product_id>\d+)')  # noqa: W605
+    def match_product(self, request, dealer_product_id=None):
         if dealer_product_id:
             dealer_product = DealersProducts.objects.get(id=dealer_product_id)
             name = dealer_product.product_name
