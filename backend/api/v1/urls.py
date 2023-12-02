@@ -15,4 +15,7 @@ router_v1.register(
 
 urlpatterns = (
     path('', include(router_v1.urls)),
+    path('owner-products/match_product/<int:dealer_product_id>/',
+         OwnerProductsViewSet.as_view({'get': 'match_product'}),
+         name='match-product'),
 )
