@@ -50,7 +50,7 @@ jobs:
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
-          context: ./backend/
+          context: ./
           push: true
           tags: vladislavkuznets0v/prosept_backend:latest
 
