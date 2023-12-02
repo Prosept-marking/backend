@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY Pipfile.lock Pipfile ./
 
-RUN apt-get update && apt-get install -y gunicorn
+RUN apt-get update && apt-get install -y gunicorn vim
 
 RUN pip install pipenv
 
