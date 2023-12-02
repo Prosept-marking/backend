@@ -11,14 +11,14 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
   backend:
-    image: vladislavkuznets0v/prosept_backend
+    image: vladislavkuznets0v/prosept_backend:latest
     env_file: ./backend/.env
     volumes:
       - static_volume:/backend_static
     depends_on:
       - db
   frontend:
-    image: asbest/prosept-front
+    image: asbest/prosept-front:latest
     env_file: ./backend/.env
     command: cp -r /app/build/. /frontend_static/
     volumes:
@@ -30,3 +30,7 @@ services:
       - static_volume:/staticfiles/
       ports:
         - 8000:80
+      depends_on:
+      - db
+      - backend
+      - frontend
