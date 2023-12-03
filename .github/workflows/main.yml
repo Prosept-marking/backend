@@ -91,15 +91,6 @@ jobs:
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         source: "docker-compose.yml"
         target: "prosept"
-    - name: Copy .env file via ssh
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        source: ".env"
-        target: "prosept"
     - name: Executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
