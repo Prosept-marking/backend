@@ -35,6 +35,7 @@ class DealerProductsViewSet(viewsets.ModelViewSet):
 class OwnerProductsViewSet(viewsets.ModelViewSet):
     queryset = OwnerProducts.objects.all()
     serializer_class = OwnerProductsSerializer
+    pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = (
         'owner_id', 'ean_13',
