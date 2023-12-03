@@ -8,4 +8,19 @@ class DealersNamesAdmin(admin.ModelAdmin):
     list_display = ('dealer_id', 'name',)
 
 
-admin.site.register(DealersProducts)
+@admin.register(DealersProducts)
+class DealersProductsAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'dealer_id',
+        'product_key',
+        'price',
+        'product_url',
+        'product_name',
+        'date',
+        'real_date',
+        'matched',
+    )
+    search_fields = ('product_key', 'product_name', 'real_date', 'matched')
+    list_filter = ('product_key', 'product_name', 'real_date', 'matched')
+    empty_value_display = '-пусто-'

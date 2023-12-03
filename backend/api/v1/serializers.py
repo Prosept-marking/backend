@@ -1,5 +1,5 @@
 from dealers.models import DealersNames, DealersProducts
-from owner.models import OwnerProducts
+from owner.models import OwnerProducts, ProductRelation
 from rest_framework import serializers
 
 
@@ -34,4 +34,14 @@ class OwnerProductsSerializer(serializers.ModelSerializer):
             'wb_name', 'ozon_article',
             'wb_article', 'ym_article',
             'wb_article_td'
+        )
+
+
+class ProductRelationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductRelation
+        fields = (
+            'pk', 'dealer_product',
+            'owner_product', 'matched',
+            'date'
         )
