@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from dealers.models import DealersNames, DealersProducts
+from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from owner.models import OwnerProducts, ProductRelation
 from rest_framework import status, viewsets
@@ -16,6 +19,16 @@ from .utils.product_matching import matching
 class BaseProductViewSet(viewsets.ModelViewSet):
     pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        days = self.request.query_params.get('days')
+        if days and days.isdigit():
+            days_count = int(days)
+            end_date = timezone.now().date()
+            start_date = end_date - timedelta(days=days_count)
+            queryset = queryset.filter(date__range=(start_date, end_date))
+        return queryset
 
 
 class DealerNamesViewSet(BaseProductViewSet):
