@@ -107,7 +107,6 @@ class ProductRelation(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Товар производителя',
     )
-    matched = models.BooleanField(default=False)
     date = models.DateField(auto_now=True)
 
     class Meta:
