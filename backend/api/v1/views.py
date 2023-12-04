@@ -17,18 +17,6 @@ class BaseProductViewSet(viewsets.ModelViewSet):
     pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
 
-    def match_product(self, request, dealer_product_id=None):
-        if dealer_product_id:
-            dealer_product = self.queryset.get(id=dealer_product_id)
-            name = dealer_product.product_name
-            matched_products = matching(name)
-            products = OwnerProducts.objects.filter(
-                name_1c__in=matched_products).values()
-            serializer = OwnerProductsSerializer(products, many=True)
-            return Response(serializer.data)
-        else:
-            return Response('No id')
-
 
 class DealerNamesViewSet(BaseProductViewSet):
     queryset = DealersNames.objects.all()
@@ -67,6 +55,20 @@ class OwnerProductsViewSet(BaseProductViewSet):
         'ozon_article', 'wb_article',
         'ym_article', 'wb_article_td'
     )
+
+    @action(detail=False, methods=['GET'],
+            url_path=r'match_product/(?P<dealer_product_id>\d+)')  # noqa: W605
+    def match_product(self, request, dealer_product_id=None):
+        if dealer_product_id:
+            dealer_product = DealersProducts.objects.get(id=dealer_product_id)
+            name = dealer_product.product_name
+            matched_products = matching(name)
+            products = OwnerProducts.objects.filter(
+                name_1c__in=matched_products).values()
+            serializer = OwnerProductsSerializer(products, many=True)
+            return Response(serializer.data)
+        else:
+            return Response('No id')
 
 
 class ProductRelationViewSet(BaseProductViewSet):
