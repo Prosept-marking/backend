@@ -27,7 +27,8 @@ services:
       image: vladislavkuznets0v/prosept_nginx
       env_file: .env
       volumes:
-      - static_volume:/staticfiles/
+        - /etc/letsencrypt:/etc/letsencrypt
+        - static_volume:/staticfiles/
       ports:
         - 80:80
       depends_on:
