@@ -5,7 +5,7 @@ from .models import DealersNames, DealersProducts
 
 @admin.register(DealersNames)
 class DealersNamesAdmin(admin.ModelAdmin):
-    list_display = ('dealer_id', 'name',)
+    list_display = ('pk', 'dealer_id', 'name',)
 
 
 @admin.register(DealersProducts)
