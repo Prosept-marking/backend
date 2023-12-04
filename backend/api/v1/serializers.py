@@ -21,7 +21,7 @@ class DelearProductsSerializer(serializers.ModelSerializer):
             'pk', 'dealer_name',
             'product_key', 'price',
             'product_url', 'product_name',
-            'date', 'matched', 'postponed'
+            'date', 'matched', 'postponed', 'real_date'
         )
 
 
