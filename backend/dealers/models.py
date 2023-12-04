@@ -59,6 +59,10 @@ class DealersProducts(models.Model):
         'Согласованный',
         default=False,
     )
+    postponed = models.BooleanField(
+        'Отложенный',
+        default=False,
+    )
 
     class Meta:
         verbose_name = 'Продукт дилера'
