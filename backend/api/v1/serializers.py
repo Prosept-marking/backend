@@ -21,7 +21,7 @@ class DelearProductsSerializer(serializers.ModelSerializer):
             'pk', 'dealer_name',
             'product_key', 'price',
             'product_url', 'product_name',
-            'date', 'matched',
+            'date', 'matched', 'postponed'
         )
 
 
@@ -48,6 +48,6 @@ class ProductRelationSerializer(serializers.ModelSerializer):
         model = ProductRelation
         fields = (
             'pk', 'dealer_product',
-            'owner_product', 'matched',
+            'owner_product',
             'date'
         )

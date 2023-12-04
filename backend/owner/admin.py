@@ -25,7 +25,6 @@ class ProductRelationAdmin(admin.ModelAdmin):
     list_display = (
         'get_dealer_product_name',
         'get_owner_product_name',
-        'matched',
         'date'
     )
     search_fields = ('date',)
