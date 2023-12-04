@@ -30,7 +30,7 @@ class DealerProductsViewSet(BaseProductViewSet):
     filterset_fields = (
         'dealer_id', 'product_key',
         'price', 'product_name',
-        'date', 'matched',
+        'date', 'matched', 'real_date',
         'product_name', 'postponed'
     )
 
