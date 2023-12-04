@@ -7,7 +7,9 @@ from rest_framework.response import Response
 
 from .paginators import LimitPageNumberPagination
 from .serializers import (DealerNamesSerializer, DelearProductsSerializer,
-                          OwnerProductsSerializer, ProductRelationSerializer)
+                          OwnerProductsSerializer,
+                          ProductRelationCreateSerializer,
+                          ProductRelationSerializer)
 from .utils.product_matching import matching
 
 
@@ -74,6 +76,11 @@ class ProductRelationViewSet(BaseProductViewSet):
         'dealer_product', 'owner_product',
         'date'
     )
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return ProductRelationCreateSerializer
+        return ProductRelationSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

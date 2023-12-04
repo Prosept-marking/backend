@@ -51,3 +51,13 @@ class ProductRelationSerializer(serializers.ModelSerializer):
             'owner_product',
             'date'
         )
+
+
+class ProductRelationCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductRelation
+        fields = (
+            'dealer_product',
+            'owner_product',
+            'date'
+        )
