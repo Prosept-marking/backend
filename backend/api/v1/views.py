@@ -6,14 +6,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .paginators import LimitPageNumberPagination
-from .serializers import (DelearNamesSerializer, DelearProductsSerializer,
+from .serializers import (DealerNamesSerializer, DelearProductsSerializer,
                           OwnerProductsSerializer, ProductRelationSerializer)
 from .utils.product_matching import matching
 
 
 class DealerNamesViewSet(viewsets.ModelViewSet):
     queryset = DealersNames.objects.all()
-    serializer_class = DelearNamesSerializer
+    serializer_class = DealerNamesSerializer
     pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('dealer_id', 'name')

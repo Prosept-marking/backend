@@ -3,7 +3,7 @@ from owner.models import OwnerProducts, ProductRelation
 from rest_framework import serializers
 
 
-class DelearNamesSerializer(serializers.ModelSerializer):
+class DealerNamesSerializer(serializers.ModelSerializer):
     class Meta:
         model = DealersNames
         fields = (
@@ -12,10 +12,13 @@ class DelearNamesSerializer(serializers.ModelSerializer):
 
 
 class DelearProductsSerializer(serializers.ModelSerializer):
+    dealer_name = serializers.StringRelatedField(source='dealer_id.name',
+                                                 read_only=True)
+
     class Meta:
         model = DealersProducts
         fields = (
-            'pk', 'dealer_id',
+            'pk', 'dealer_name',
             'product_key', 'price',
             'product_url', 'product_name',
             'date', 'matched',
