@@ -41,6 +41,9 @@ class OwnerProductsSerializer(serializers.ModelSerializer):
 
 
 class ProductRelationSerializer(serializers.ModelSerializer):
+    dealer_product = DelearProductsSerializer(read_only=True)
+    owner_product = OwnerProductsSerializer(read_only=True)
+
     class Meta:
         model = ProductRelation
         fields = (
