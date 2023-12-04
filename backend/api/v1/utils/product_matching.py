@@ -28,7 +28,7 @@ def count_tfidf(data):
 
 
 def prepare_data():
-    owner_products = OwnerProducts.objects.all()
+    owner_products = OwnerProducts.objects.exclude(name_1c='')
     df_product = pd.DataFrame(list(owner_products.values()))
     # main base
     data_product = df_product[['id', 'name_1c', 'recommended_price']].copy()
