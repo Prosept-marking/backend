@@ -27,7 +27,7 @@ class BaseProductViewSet(viewsets.ModelViewSet):
             days_count = int(days)
             end_date = timezone.now().date()
             start_date = end_date - timedelta(days=days_count)
-            queryset = queryset.filter(date__range=(start_date, end_date))
+            queryset = queryset.filter(real_date__range=(start_date, end_date))
         return queryset
 
 
