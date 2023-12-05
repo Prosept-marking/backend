@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'api.v1.apps.ApiConfig',
     'dealers.apps.DealersConfig',
     'owner.apps.OwnerConfig',
+    'statistic.apps.StatisticConfig',
     'django.contrib.staticfiles',
     'drf_yasg',
     'django_filters',
