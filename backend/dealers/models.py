@@ -24,6 +24,11 @@ class DealersNames(models.Model):
 
 class DealersProducts(models.Model):
     """Товары всех дилеров."""
+    STATUS_CHOICES = [
+        ('matched', 'Согласованный'),
+        ('postponed', 'Отложенный'),
+        ('unprocessed', 'Необработанный'),
+    ]
     dealer_id = models.ForeignKey(
         DealersNames,
         verbose_name='ID дилера',
@@ -63,6 +68,12 @@ class DealersProducts(models.Model):
         'Отложенный',
         default=False,
     )
+    combined_status = models.CharField(
+        'Комбинированный статус',
+        choices=STATUS_CHOICES,
+        default='unprocessed',
+        max_length=20,
+    )
 
     class Meta:
         verbose_name = 'Продукт дилера'
@@ -71,10 +82,12 @@ class DealersProducts(models.Model):
     def __str__(self):
         return self.product_name
 
-    def get_combined_status(self):
+    def save(self, *args, **kwargs):
         if self.matched:
-            return 'Согласованный'
+            self.combined_status = 'matched'
         elif self.postponed:
-            return 'Отложенный'
+            self.combined_status = 'postponed'
         else:
-            return 'Необработанный'
+            self.combined_status = 'unprocessed'
+
+        super().save(*args, **kwargs)

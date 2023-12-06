@@ -22,16 +22,6 @@ class BaseProductViewSet(viewsets.ModelViewSet):
     pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        days = self.request.query_params.get('days')
-        if days and days.isdigit():
-            days_count = int(days)
-            end_date = timezone.now().date()
-            start_date = end_date - timedelta(days=days_count)
-            queryset = queryset.filter(real_date__range=(start_date, end_date))
-        return queryset
-
 
 class DealerNamesViewSet(BaseProductViewSet):
     queryset = DealersNames.objects.all()
@@ -46,8 +36,19 @@ class DealerProductsViewSet(BaseProductViewSet):
         'dealer_id', 'product_key',
         'price', 'product_name',
         'date', 'matched', 'real_date',
-        'product_name', 'postponed'
+        'product_name', 'postponed',
+        'combined_status'
     )
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        days = self.request.query_params.get('days')
+        if days and days.isdigit():
+            days_count = int(days)
+            end_date = timezone.now().date()
+            start_date = end_date - timedelta(days=days_count)
+            queryset = queryset.filter(real_date__range=(start_date, end_date))
+        return queryset
 
     @action(detail=True, methods=['PATCH'])
     def set_postponed(self, request, pk=None):
@@ -57,11 +58,13 @@ class DealerProductsViewSet(BaseProductViewSet):
         dealer_product.save()
         return Response({'postponed': True})
 
-    @action(detail=True, methods=['GET'])
-    def get_status(self, request, pk=None):
+    @action(detail=True, methods=['PATCH'])
+    def set_unprocessed(self, request, pk=None):
         dealer_product = self.get_object()
-        status = dealer_product.get_combined_status()
-        return Response({'status': status})
+        dealer_product.postponed = False
+        dealer_product.matched = False
+        dealer_product.save()
+        return Response({'postponed': False})
 
 
 class OwnerProductsViewSet(BaseProductViewSet):

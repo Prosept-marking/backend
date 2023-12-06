@@ -44,7 +44,7 @@ class DelearProductsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DealersProducts
         fields = (
-            'pk', 'dealer_name',
+            'pk', 'dealer_name', 'combined_status',
             'product_key', 'price',
             'product_url', 'product_name',
             'date', 'matched', 'postponed', 'real_date'
