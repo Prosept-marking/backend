@@ -70,3 +70,11 @@ class DealersProducts(models.Model):
 
     def __str__(self):
         return self.product_name
+
+    def get_combined_status(self):
+        if self.matched:
+            return 'Согласованный'
+        elif self.postponed:
+            return 'Отложенный'
+        else:
+            return 'Необработанный'
