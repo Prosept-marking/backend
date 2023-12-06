@@ -55,6 +55,12 @@ class DealerProductsViewSet(BaseProductViewSet):
         dealer_product.save()
         return Response({'postponed': True})
 
+    # @action(detail=True, methods=['GET'])
+    # def get_status(self, request, pk=None):
+    #     dealer_product = self.get_object()
+    #     status = dealer_product.get_combined_status()
+    #     return Response({'status': status})
+
 
 class OwnerProductsViewSet(BaseProductViewSet):
     queryset = OwnerProducts.objects.all()
