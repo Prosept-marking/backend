@@ -34,7 +34,8 @@ class DealerProductsViewSet(BaseProductViewSet):
     serializer_class = DelearProductsSerializer
     filterset_fields = (
         'dealer_id', 'product_key',
-        'price', 'product_name',
+        'price', 'product_name', 'pk_owner_product',
+        'name_1c_owner',
         'date', 'matched', 'real_date',
         'product_name', 'postponed',
         'combined_status'
