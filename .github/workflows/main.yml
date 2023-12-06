@@ -92,6 +92,7 @@ jobs:
         script: |
           sudo rm -r ${{ secrets.PROJECT_NAME }}
           sudo mkdir -p ${{ secrets.PROJECT_NAME }}
+          sudo chmod 777 ${{ secrets.PROJECT_NAME }}
           sudo cat > ${{ secrets.PROJECT_NAME }}/.env << _EOF_
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
             DB_HOST=${{ secrets.POSTGRES_HOST }}
