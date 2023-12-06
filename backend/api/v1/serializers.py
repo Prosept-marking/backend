@@ -1,13 +1,39 @@
 from dealers.models import DealersNames, DealersProducts
 from owner.models import OwnerProducts, ProductRelation
 from rest_framework import serializers
+from statistic.models import ComparisonSallers, DailyStatistics
+
+
+class DailyStatisticsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyStatistics
+        fields = (
+            'date',
+            'daily_unverified_product',
+            'unverified_product',
+            'verified_product',
+            'rejected_product',
+        )
+
+
+class ComparisonSallersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComparisonSallers
+        fields = (
+            'saller_name',
+            'verified_product',
+            'unverified_product',
+            'all_product',
+        )
 
 
 class DealerNamesSerializer(serializers.ModelSerializer):
     class Meta:
         model = DealersNames
         fields = (
-            'pk', 'dealer_id', 'name',
+            'pk',
+            'dealer_id',
+            'name',
         )
 
 

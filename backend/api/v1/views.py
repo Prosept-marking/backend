@@ -7,10 +7,12 @@ from owner.models import OwnerProducts, ProductRelation
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from statistic.models import ComparisonSallers, DailyStatistics
 
 from .paginators import LimitPageNumberPagination
-from .serializers import (DealerNamesSerializer, DelearProductsSerializer,
-                          OwnerProductsSerializer,
+from .serializers import (ComparisonSallersSerializer,
+                          DailyStatisticsSerializer, DealerNamesSerializer,
+                          DelearProductsSerializer, OwnerProductsSerializer,
                           ProductRelationCreateSerializer,
                           ProductRelationSerializer)
 from .utils.product_matching import matching
@@ -54,6 +56,12 @@ class DealerProductsViewSet(BaseProductViewSet):
         dealer_product.matched = False
         dealer_product.save()
         return Response({'postponed': True})
+
+    @action(detail=True, methods=['GET'])
+    def get_status(self, request, pk=None):
+        dealer_product = self.get_object()
+        status = dealer_product.get_combined_status()
+        return Response({'status': status})
 
 
 class OwnerProductsViewSet(BaseProductViewSet):
@@ -112,3 +120,38 @@ class ProductRelationViewSet(BaseProductViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED,
                         headers=headers)
+
+    @action(detail=True, methods=['GET'])
+    def get_related_product_name(self, request, pk=None):
+        try:
+            related_product = ProductRelation.objects.filter(
+                dealer_product_id=pk).first()
+            if related_product:
+                related_product_name = related_product.owner_product.name_1c
+                return Response({'related_product_name': related_product_name})
+        except ProductRelation.DoesNotExist:
+            pass
+        return Response({'message': 'Товар не сопоставленн'}, status=404)
+
+
+class DailyStatisticsViewSet(BaseProductViewSet):
+    queryset = DailyStatistics.objects.all()
+    serializer_class = DailyStatisticsSerializer
+    filterset_fields = (
+        'date',
+        'daily_unverified_product',
+        'unverified_product',
+        'verified_product',
+        'rejected_product',
+    )
+
+
+class ComparisonSallersViewSet(BaseProductViewSet):
+    queryset = ComparisonSallers.objects.all()
+    serializer_class = ComparisonSallersSerializer
+    filterset_fields = (
+        'saller_name',
+        'verified_product',
+        'unverified_product',
+        'all_product',
+    )

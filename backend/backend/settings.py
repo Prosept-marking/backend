@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'api.v1.apps.ApiConfig',
     'dealers.apps.DealersConfig',
     'owner.apps.OwnerConfig',
+    'statistic.apps.StatisticConfig',
     'django.contrib.staticfiles',
     'drf_yasg',
     'django_filters',
@@ -47,11 +48,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_URLS_REGEX = r'^/api/.*$'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#
+# SESSION_COOKIE_SECURE = True
+#
+# CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'backend.urls'
 
