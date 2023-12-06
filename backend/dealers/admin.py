@@ -17,10 +17,16 @@ class DealersProductsAdmin(admin.ModelAdmin):
         'price',
         'product_url',
         'product_name',
+        'pk_owner_product',
+        'name_1c_owner',
         'date',
         'real_date',
         'matched',
+        'combined_status',
+        'postponed',
     )
-    search_fields = ('product_key', 'product_name', 'real_date', 'matched')
-    list_filter = ('product_key', 'product_name', 'real_date', 'matched')
+    search_fields = ('product_key', 'product_name',
+                     'real_date', 'combined_status')
+    list_filter = ('product_key', 'product_name',
+                   'real_date', 'combined_status')
     empty_value_display = '-пусто-'
