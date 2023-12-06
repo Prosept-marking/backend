@@ -23,12 +23,13 @@ class OwnerProductsAdmin(admin.ModelAdmin):
 @admin.register(ProductRelation)
 class ProductRelationAdmin(admin.ModelAdmin):
     list_display = (
+        'pk',
         'get_dealer_product_name',
         'get_owner_product_name',
         'date'
     )
     search_fields = ('date',)
-    list_filter = ('date',)
+    list_filter = ('date', )
 
     def get_dealer_product_name(self, obj):
         return obj.dealer_product.product_name
