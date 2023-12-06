@@ -22,16 +22,6 @@ class BaseProductViewSet(viewsets.ModelViewSet):
     pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        days = self.request.query_params.get('days')
-        if days and days.isdigit():
-            days_count = int(days)
-            end_date = timezone.now().date()
-            start_date = end_date - timedelta(days=days_count)
-            queryset = queryset.filter(real_date__range=(start_date, end_date))
-        return queryset
-
 
 class DealerNamesViewSet(BaseProductViewSet):
     queryset = DealersNames.objects.all()
@@ -46,22 +36,36 @@ class DealerProductsViewSet(BaseProductViewSet):
         'dealer_id', 'product_key',
         'price', 'product_name',
         'date', 'matched', 'real_date',
-        'product_name', 'postponed'
+        'product_name', 'postponed',
+        'combined_status'
     )
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        days = self.request.query_params.get('days')
+        if days and days.isdigit():
+            days_count = int(days)
+            end_date = timezone.now().date()
+            start_date = end_date - timedelta(days=days_count)
+            queryset = queryset.filter(real_date__range=(start_date, end_date))
+        return queryset
 
     @action(detail=True, methods=['PATCH'])
     def set_postponed(self, request, pk=None):
         dealer_product = self.get_object()
+        if dealer_product.matched:
+            dealer_product.matched = False
         dealer_product.postponed = True
-        dealer_product.matched = False
         dealer_product.save()
         return Response({'postponed': True})
 
-    @action(detail=True, methods=['GET'])
-    def get_status(self, request, pk=None):
+    @action(detail=True, methods=['PATCH'])
+    def set_unprocessed(self, request, pk=None):
         dealer_product = self.get_object()
-        status = dealer_product.get_combined_status()
-        return Response({'status': status})
+        dealer_product.postponed = False
+        dealer_product.matched = False
+        dealer_product.save()
+        return Response({'postponed': False})
 
 
 class OwnerProductsViewSet(BaseProductViewSet):
@@ -120,18 +124,6 @@ class ProductRelationViewSet(BaseProductViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED,
                         headers=headers)
-
-    @action(detail=True, methods=['GET'])
-    def get_related_product_name(self, request, pk=None):
-        try:
-            related_product = ProductRelation.objects.filter(
-                dealer_product_id=pk).first()
-            if related_product:
-                related_product_name = related_product.owner_product.name_1c
-                return Response({'related_product_name': related_product_name})
-        except ProductRelation.DoesNotExist:
-            pass
-        return Response({'message': 'Товар не сопоставленн'}, status=404)
 
 
 class DailyStatisticsViewSet(BaseProductViewSet):
