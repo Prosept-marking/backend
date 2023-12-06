@@ -45,14 +45,14 @@ jobs:
       - name: Login to Docker
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
           context: ./
           push: true
-          tags: vladislavkuznets0v/prosept_backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/prosept_backend:latest
 
   build_gateway_and_push_to_docker_hub:
     name: Push gateway Docker image to DockerHub
@@ -65,14 +65,14 @@ jobs:
       - name: Login to Docker
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
           context: ./nginx/
           push: true
-          tags: vladislavkuznets0v/prosept_nginx:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/prosept_nginx:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -82,6 +82,30 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
+    - name: Create project directory and .env-file
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        script: |
+          sudo rm -r ${{ secrets.PROJECT_NAME }}
+          sudo mkdir -p ${{ secrets.PROJECT_NAME }}
+          sudo chmod 777 ${{ secrets.PROJECT_NAME }}
+          sudo cat > ${{ secrets.PROJECT_NAME }}/.env << _EOF_
+            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            DB_HOST=${{ secrets.POSTGRES_HOST }}
+            DB_PORT=${{ secrets.POSTGRES_PORT }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
+            DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
+            DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
+            PROJECT_NAME=${{ secrets.PROJECT_NAME }}
+            DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            DOCKERHUB_USERNAME_FRONT=${{ secrets.DOCKERHUB_USERNAME_FRONT }}
+          _EOF_
     - name: Copy docker-compose.yml via ssh
       uses: appleboy/scp-action@master
       with:
@@ -100,7 +124,6 @@ jobs:
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd prosept
-          sudo docker compose -f docker-compose.yml pull
           sudo docker compose -f docker-compose.yml down
           sudo docker compose -f docker-compose.yml up -d
           sudo docker compose -f docker-compose.yml exec backend pipenv run python manage.py migrate
