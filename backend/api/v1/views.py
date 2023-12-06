@@ -53,8 +53,9 @@ class DealerProductsViewSet(BaseProductViewSet):
     @action(detail=True, methods=['PATCH'])
     def set_postponed(self, request, pk=None):
         dealer_product = self.get_object()
+        if dealer_product.matched:
+            dealer_product.matched = False
         dealer_product.postponed = True
-        dealer_product.matched = False
         dealer_product.save()
         return Response({'postponed': True})
 
@@ -123,18 +124,6 @@ class ProductRelationViewSet(BaseProductViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED,
                         headers=headers)
-
-    @action(detail=True, methods=['GET'])
-    def get_related_product_name(self, request, pk=None):
-        try:
-            related_product = ProductRelation.objects.filter(
-                dealer_product_id=pk).first()
-            if related_product:
-                related_product_name = related_product.owner_product.name_1c
-                return Response({'related_product_name': related_product_name})
-        except ProductRelation.DoesNotExist:
-            pass
-        return Response({'message': 'Товар не сопоставленн'}, status=404)
 
 
 class DailyStatisticsViewSet(BaseProductViewSet):

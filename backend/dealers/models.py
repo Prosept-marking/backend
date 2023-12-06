@@ -54,6 +54,18 @@ class DealersProducts(models.Model):
         'Наименование товара дилера',
         max_length=settings.MAX_NAME_LENGTH,
     )
+    pk_owner_product = models.IntegerField(
+        null=True,
+        blank=True,
+        default=None,
+    )
+    name_1c_owner = models.CharField(
+        'Наименование товара производителя',
+        max_length=settings.MAX_NAME_LENGTH,
+        null=True,
+        blank=True,
+        default=None,
+    )
     date = models.CharField(
         'date',
         max_length=10,
