@@ -49,9 +49,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#
 # SESSION_COOKIE_SECURE = True
-#
 # CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'backend.urls'
@@ -84,8 +82,8 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'prosept'),
         'USER': os.getenv('POSTGRES_USER', 'postgres'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', 5432)
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', 5432)
     }
 }
 
