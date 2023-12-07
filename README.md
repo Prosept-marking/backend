@@ -1,4 +1,4 @@
-# Проект Просепт: 
+# Проект Просепт:
 [![MSPP CI/CD](https://github.com/Prosept-marking/backend/actions/workflows/main.yml/badge.svg)](https://github.com/Prosept-marking/backend/actions/workflows/main.yml/badge.svg)
 
 Цель проекта - разработка решения, которое отчасти автоматизирует процесс сопоставления товаров оператором. Основная идея - предлагать несколько товаров заказчика, которые с наибольшей вероятностью соответствуют размечаемому товару дилера. Выбор наиболее вероятных подсказок делается методами машинного обучения.
@@ -51,7 +51,7 @@
 ## Описание работы:
 При запуске приложения БД инициализируется следующими таблицами:
 1. Товары производителя
-2. Товары дилеров 
+2. Товары дилеров
 3. Перечень дилеров
 4. Таблица сопоставления товаров производителя и дилеров
 
@@ -91,11 +91,11 @@
     ```
 </details>
 <hr>
-<details><summary>Локальный запуск</summary> 
+<details><summary>Локальный запуск</summary>
 
 1. Клонируйте репозиторий с GitHub и в **.env**-файле введите данные для переменных окружения (значения даны для примера, но их можно оставить; подсказки даны в комментариях):
 ```bash
-git clone https://github.com/Prosept-marking/backend.git && \ 
+git clone https://github.com/Prosept-marking/backend.git && \
 cd backend && \
 cp .env_example .env && \
 nano .env
@@ -107,7 +107,7 @@ nano .env
 ```bash
 docker compose up -d --build
 ```
-Проект будет развернут в четырех docker-контейнерах (db, backend, frontend, nginx) по адресу `http://localhost:8000`.
+Проект будет развернут в четырех docker-контейнерах (db, backend, frontend, nginx) по адресу `http://localhost:80`.
 
 3. Остановить docker и удалить контейнеры можно командой из корневой директории проекта:
 ```bash
@@ -125,23 +125,33 @@ docker compose down -v
 
 # Данные удаленного сервера и ssh-подключения:
 HOST  # публичный IP-адрес вашего удаленного сервера
-USERNAME
+USER
 SSH_KEY
-PASSPHRASE
+SSH_PASSPHRASE
 
-# База данных:
-DB_HOST=db
-DB_NAME=postgres
-DB_PORT=5432
+#  Переменные для работы с PostgreSQL.
+POSTGRES_HOST=db
+POSTGRES_DB=postgres
+POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=12345
+
+# Переменные для создания суперюзера.
+DJANGO_SUPERUSER_USERNAME=admin
+DJANGO_SUPERUSER_EMAIL=admin@admin.com
+DJANGO_SUPERUSER_PASSWORD=admpass
+
+# Переменные для работы с docker.
+DOCKERHUB_USERNAME=username
+DOCKERHUB_USERNAME_FRONT=username_front
+PROJECT_NAME=project_name
 ```
 
 4. Запустите вручную `workflow`, чтобы автоматически развернуть проект в четырех docker-контейнерах (db, backend, frontend, nginx) на удаленном сервере.
 </details>
 <hr>
 
-При первом запуске будут автоматически произведены следующие действия:    
+При первом запуске будут автоматически произведены следующие действия:
   * выполнятся миграции БД
   * создастся суперюзер (пользователь с правами админа) с учетными данными из переменных окружения `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL`, `DJANGO_SUPERUSER_PASSWORD`.
   * соберется статика
