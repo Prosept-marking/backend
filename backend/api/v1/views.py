@@ -128,6 +128,20 @@ class ProductRelationViewSet(BaseProductViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED,
                         headers=headers)
 
+    @action(detail=False, methods=['DELETE'],
+            url_path='delete-product-relation-by-dealer-product/('
+                     '?P<dealer_product_id>[^/.]+)')
+    def delete_product_relation_by_dealer_product(self, request,
+                                                  dealer_product_id=None):
+        product_relations = ProductRelation.objects.filter(
+            dealer_product=dealer_product_id)
+        if product_relations.exists():
+            product_relations.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({'error': 'Связь товаров не найдена.'},
+                            status=status.HTTP_404_NOT_FOUND)
+
 
 class DailyStatisticsViewSet(BaseProductViewSet):
     queryset = DailyStatistics.objects.all()
