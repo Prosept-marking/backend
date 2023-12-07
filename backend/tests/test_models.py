@@ -35,8 +35,12 @@ class DealerProductModelTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.saller = DealersNames.objects.create(
+            dealer_id=1,
+            name='Название'
+        )
         cls.task = DealersProducts.objects.create(
-            dealer_id=101,
+            dealer_id=cls.saller.name,
             product_key='key10',
             price=3,
             product_url='http://test.ru',
@@ -48,7 +52,7 @@ class DealerProductModelTest(TestCase):
             postponed=False,
         )
         cls.task_post = DealersProducts.objects.create(
-            dealer_id=101,
+            dealer_id=cls.saller.name,
             product_key='key10',
             price=3,
             product_url='http://test.ru',
@@ -60,7 +64,7 @@ class DealerProductModelTest(TestCase):
             postponed=True,
         )
         cls.task_unproc = DealersProducts.objects.create(
-            dealer_id=101,
+            dealer_id=cls.saller.name,
             product_key='key10',
             price=3,
             product_url='http://test.ru',
@@ -233,7 +237,7 @@ class ComparisonSallersModelTest(TestCase):
             name='Название'
         )
         cls.task = ComparisonSallers.objects.create(
-            saller_name=cls.saller.pk,
+            saller_name=cls.saller.name,
             verified_product='Проверенный товар компании',
             unverified_product='Непроверенный товар организации',
             all_product='Все продукты компании'
