@@ -41,8 +41,8 @@ class ComparisonSallers(models.Model):
         'Количество неразмеченных товаров дилера',
         default=0)
     all_product = models.PositiveIntegerField(
-        'Все товары организации'
-    )
+        'Все товары организации',
+        default=0)
     rejected_product = models.PositiveIntegerField(
         'Колличество отклоненных сопоставленй',
         default=0)

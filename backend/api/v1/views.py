@@ -48,7 +48,7 @@ class DealerProductsViewSet(BaseProductViewSet):
             days_count = int(days)
             end_date = timezone.now().date()
             start_date = end_date - timedelta(days=days_count)
-            queryset = queryset.filter(real_date__range=(start_date, end_date))
+            queryset = queryset.filter(date__range=(start_date, end_date))
         return queryset
 
     @action(detail=True, methods=['PATCH'])
@@ -172,5 +172,37 @@ class ComparisonSallersViewSet(BaseProductViewSet):
         'saller_name',
         'verified_product',
         'unverified_product',
+        'rejected_product',
         'all_product',
     )
+
+    def get_queryset(self):
+        update_dealers_statistics()
+        return ComparisonSallers.objects.all()
+
+
+def update_dealers_statistics():
+    dealers = DealersNames.objects.all()
+    for dealer in dealers:
+        matched_count = DealersProducts.objects.filter(
+            dealer_id=dealer,
+            matched=True
+        ).count()
+        postponed_count = DealersProducts.objects.filter(
+            dealer_id=dealer,
+            postponed=True
+        ).count()
+        unprocessed_count = DealersProducts.objects.filter(
+            dealer_id=dealer,
+            matched=False,
+            postponed=False
+        ).count()
+        daily_stats, created = ComparisonSallers.objects.get_or_create(
+            saller_name=dealer,
+        )
+        all_products = matched_count + postponed_count + unprocessed_count
+        daily_stats.verified_product = matched_count
+        daily_stats.rejected_product = postponed_count
+        daily_stats.unverified_product = unprocessed_count
+        daily_stats.all_product = all_products
+        daily_stats.save()
