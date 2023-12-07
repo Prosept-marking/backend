@@ -16,7 +16,22 @@ class DailyStatisticsSerializer(serializers.ModelSerializer):
         )
 
 
+class DealerNamesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DealersNames
+        fields = (
+            'pk',
+            'dealer_id',
+            'name',
+        )
+
+
 class ComparisonSallersSerializer(serializers.ModelSerializer):
+    saller_name = serializers.SerializerMethodField()
+
+    def get_saller_name(self, obj):
+        return obj.saller_name.name
+
     class Meta:
         model = ComparisonSallers
         fields = (
@@ -25,16 +40,6 @@ class ComparisonSallersSerializer(serializers.ModelSerializer):
             'unverified_product',
             'rejected_product',
             'all_product',
-        )
-
-
-class DealerNamesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DealersNames
-        fields = (
-            'pk',
-            'dealer_id',
-            'name',
         )
 
 
