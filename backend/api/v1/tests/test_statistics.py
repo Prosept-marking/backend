@@ -7,19 +7,19 @@ from rest_framework.test import APITestCase
 
 class ApiUrlsTests(SimpleTestCase):
     def test_get_dailystatistic_is_resolved(self):
-        url = reverse('api.v1:dailystatistic')
+        url = reverse('api_v1:dailystatistic')
         self.assertEqual(
             resolve(url).func.view_class, DailyStatisticsViewSet)
 
     def test_get_dealersstatistic_is_resolved(self):
-        url = reverse('api.v1:dealersstatistic')
+        url = reverse('api_v1:dealersstatistic')
         self.assertEqual(
             resolve(url).func.view_class, ComparisonSallersViewSet)
 
 
 class CustomerAPIViewTests(APITestCase):
-    url_1 = reverse('api.v1:dailystatistic')
-    url_2 = reverse('api.v1:dealersstatistic')
+    url_1 = reverse('api_v1:dailystatistic')
+    url_2 = reverse('api_v1:dealersstatistic')
 
     def test_get_customers(self):
         response_1 = self.client.get(self.url_1)
@@ -29,24 +29,24 @@ class CustomerAPIViewTests(APITestCase):
 
     def test_post_dailystatistic(self):
         data = {
-            'title': 'Mr',
-            'name': 'Peter',
-            'last_name': 'Parkerz',
-            'gender': 'M',
-            'status': 'published'
+            'date': '',
+            'daily_unverified_product': '',
+            'unverified_product': '',
+            'verified_product': '',
+            'rejected_product': ''
         }
         response = self.client.post(self.url_1, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(response.data), 8)
+        self.assertEqual(len(response.data), 5)
 
     def test_post_dealersstatistic(self):
         data = {
-            'title': 'Mr',
-            'name': 'Peter',
-            'last_name': 'Parkerz',
-            'gender': 'M',
-            'status': 'published'
+            'saller_name': '',
+            'verified_product': '',
+            'unverified_product': '',
+            'rejected_product': '',
+            'all_product': ''
         }
         response = self.client.post(self.url_2, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(response.data), 8)
+        self.assertEqual(len(response.data), 5)
