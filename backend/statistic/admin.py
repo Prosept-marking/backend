@@ -35,6 +35,7 @@ class ComparisonSallersAdmin(admin.ModelAdmin):
         'saller_name',
         'verified_product',
         'unverified_product',
+        'rejected_product',
         'all_product',
     )
     search_fields = (
