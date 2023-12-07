@@ -56,7 +56,7 @@ class OwnerProductsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OwnerProducts
         fields = (
-            'pk', 'owner_id',
+            'id', 'owner_id',
             'article', 'ean_13',
             'name', 'name_1c',
             'cost', 'recommended_price',

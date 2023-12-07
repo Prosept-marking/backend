@@ -70,9 +70,10 @@ class DealerProductsViewSet(BaseProductViewSet):
 
 
 class OwnerProductsViewSet(BaseProductViewSet):
-    queryset = OwnerProducts.objects.all()
+    queryset = OwnerProducts.objects.all().order_by('id')
     serializer_class = OwnerProductsSerializer
     filterset_fields = (
+        'pk',
         'owner_id', 'ean_13',
         'article', 'name',
         'name_1c', 'cost',
