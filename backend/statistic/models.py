@@ -8,16 +8,16 @@ class DailyStatistics(models.Model):
     """Модель для подсчета ежедневной статистики работы с товаром."""
     date = models.DateField(default=date.today)
     daily_unverified_product = models.PositiveIntegerField(
-        'Непровернный товар на начало дня',
+        'Количество неразмеченных товаров на начало дня',
         default=0)
     unverified_product = models.PositiveIntegerField(
-        'Непроверенный товар на конец дня',
+        'Количество неразмеченных товаров на конец дня',
         default=0)
     verified_product = models.PositiveIntegerField(
-        'Проверенный товар на конец дня',
+        'Количество сопоставленных товаров на конец дня',
         default=0)
     rejected_product = models.PositiveIntegerField(
-        'Отложенный товар',
+        'Количество отклоненных сопоставлений',
         default=0)
 
     class Meta:
@@ -28,21 +28,24 @@ class DailyStatistics(models.Model):
 
 
 class ComparisonSallers(models.Model):
-    """Модель статистики сопоставлений по продавцу."""
+    """Модель статистики сопоставлений по дилеру."""
     saller_name = models.ForeignKey(
         DealersNames,
         on_delete=models.CASCADE,
-        verbose_name='Название организации продавца'
+        verbose_name='Название организации дилера'
     )
     verified_product = models.PositiveIntegerField(
-        'Проверенный товар компании',
+        'Количество сопоставленных товаров дилера',
         default=0)
     unverified_product = models.PositiveIntegerField(
-        'Непроверенный товар организации',
+        'Количество неразмеченных товаров дилера',
         default=0)
     all_product = models.PositiveIntegerField(
-        'Все продукты компании'
+        'Все товары организации'
     )
+    rejected_product = models.PositiveIntegerField(
+        'Колличество отклоненных сопоставленй',
+        default=0)
 
     class Meta:
         verbose_name = 'Статистика сопоставлений товара по продавцу'
