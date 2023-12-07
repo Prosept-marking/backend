@@ -14,6 +14,7 @@ django-cors-headers = "*"
 
 [dev-packages]
 pre-commit = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.11"
