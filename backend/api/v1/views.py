@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 
 from dealers.models import DealersNames, DealersProducts
 from django.utils import timezone
@@ -73,7 +73,6 @@ class OwnerProductsViewSet(BaseProductViewSet):
     queryset = OwnerProducts.objects.all().order_by('id')
     serializer_class = OwnerProductsSerializer
     filterset_fields = (
-        'pk',
         'owner_id', 'ean_13',
         'article', 'name',
         'name_1c', 'cost',
@@ -138,6 +137,32 @@ class DailyStatisticsViewSet(BaseProductViewSet):
         'verified_product',
         'rejected_product',
     )
+
+    def get_queryset(self):
+        update_daily_statistics()
+        return DailyStatistics.objects.all()
+
+
+def update_daily_statistics():
+    today = date.today()
+    daily_stats_today, created = DailyStatistics.objects.get_or_create(
+        date=today)
+    if created:
+        previous_stats = DailyStatistics.objects.filter(
+            date__lt=today).order_by('-date').first()
+        daily_stats_today.unverified_product = DealersProducts.objects.filter(
+            combined_status='unprocessed').count()
+        daily_unverified_product = previous_stats.unverified_product if \
+            previous_stats else daily_stats_today.unverified_product
+        daily_stats_today.daily_unverified_product = daily_unverified_product
+        daily_stats_today.unverified_product = daily_unverified_product
+    daily_stats_today.verified_product = DealersProducts.objects.filter(
+        combined_status='matched').count()
+    daily_stats_today.rejected_product = DealersProducts.objects.filter(
+        combined_status='postponed').count()
+    daily_stats_today.unverified_product = DealersProducts.objects.filter(
+        combined_status='unprocessed').count()
+    daily_stats_today.save()
 
 
 class ComparisonSallersViewSet(BaseProductViewSet):
