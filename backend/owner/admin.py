@@ -24,7 +24,9 @@ class OwnerProductsAdmin(admin.ModelAdmin):
 class ProductRelationAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
+        'dealer_product',
         'get_dealer_product_name',
+        'owner_product',
         'get_owner_product_name',
         'date'
     )
