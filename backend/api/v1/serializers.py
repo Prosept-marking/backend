@@ -57,6 +57,13 @@ class DelearProductsSerializer(serializers.ModelSerializer):
             'date', 'matched', 'postponed', 'real_date'
         )
 
+    def validate(self, data):
+        required_fields = ['dealer_name', 'product_name', 'product_key']
+        for field in required_fields:
+            if not data.get(field):
+                raise serializers.ValidationError(f'{field} is required')
+        return data
+
 
 class OwnerProductsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -71,6 +78,13 @@ class OwnerProductsSerializer(serializers.ModelSerializer):
             'wb_article', 'ym_article',
             'wb_article_td'
         )
+
+    def validate(self, data):
+        required_fields = ['article', 'ean_13', 'name_1c']
+        for field in required_fields:
+            if not data.get(field):
+                raise serializers.ValidationError(f'{field} is required')
+        return data
 
 
 class ProductRelationSerializer(serializers.ModelSerializer):

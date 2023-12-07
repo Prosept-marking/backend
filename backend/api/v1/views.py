@@ -144,6 +144,12 @@ class DailyStatisticsViewSet(BaseProductViewSet):
         update_daily_statistics()
         return DailyStatistics.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        return Response(
+            {'error': 'Создание статистики через метод POST запрещено.'},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
+
 
 def update_daily_statistics():
     today = date.today()
@@ -181,6 +187,12 @@ class ComparisonSallersViewSet(BaseProductViewSet):
     def get_queryset(self):
         update_dealers_statistics()
         return ComparisonSallers.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        return Response(
+            {'error': 'Создание объектов через метод POST запрещено.'},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
 
 
 def update_dealers_statistics():
