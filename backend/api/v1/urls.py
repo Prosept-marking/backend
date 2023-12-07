@@ -5,7 +5,7 @@ from .views import (ComparisonSallersViewSet, DailyStatisticsViewSet,
                     DealerNamesViewSet, DealerProductsViewSet,
                     OwnerProductsViewSet, ProductRelationViewSet)
 
-app_name = 'api.v1'
+app_name = 'api_v1'
 
 router_v1 = DefaultRouter()
 router_v1.register('dealer-names', DealerNamesViewSet, 'dealernames')

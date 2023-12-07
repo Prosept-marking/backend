@@ -7,19 +7,19 @@ from rest_framework.test import APITestCase
 
 class ApiUrlsTests(SimpleTestCase):
     def test_get_dealernames_is_resolved(self):
-        url = reverse('api.v1:dealernames')
+        url = reverse('api_v1:dealernames')
         self.assertEqual(
             resolve(url).func.view_class, DealerNamesViewSet)
 
     def test_get_dealerproducts_is_resolved(self):
-        url = reverse('api.v1:dealerproducts')
+        url = reverse('api_v1:dealerproducts')
         self.assertEqual(
             resolve(url).func.view_class, DealerProductsViewSet)
 
 
 class CustomerAPIViewTests(APITestCase):
-    url_1 = reverse('api.v1:dealernames')
-    url_2 = reverse('api.v1:dealerproducts')
+    url_1 = reverse('api_v1:dealernames')
+    url_2 = reverse('api_v1:dealerproducts')
 
     def test_get_customers(self):
         response_1 = self.client.get(self.url_1)
@@ -41,10 +41,10 @@ class CustomerAPIViewTests(APITestCase):
 
     def test_post_dealerproducts(self):
         data = {
-            'product_key': 'Mr',
-            'product_url': 'Peter',
-            'product_name': 'Parkerz',
-            'date': 'M',
+            'product_key': '1234',
+            'product_url': 'https://example.com',
+            'product_name': 'test_product_name',
+            'date': '2004-12-12',
         }
         response = self.client.post(self.url_2, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
