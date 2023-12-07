@@ -57,6 +57,8 @@ class DealerProductsViewSet(BaseProductViewSet):
         if dealer_product.matched:
             dealer_product.matched = False
         dealer_product.postponed = True
+        dealer_product.pk_owner_product = None
+        dealer_product.name_1c_owner = None
         dealer_product.save()
         return Response({'postponed': True})
 
