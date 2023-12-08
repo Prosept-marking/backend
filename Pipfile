@@ -5,9 +5,16 @@ name = "pypi"
 
 [packages]
 django = "*"
+psycopg2-binary = "*"
+drf-yasg = "*"
+pandas = "==2.1.3"
+scikit-learn = "==1.3.2"
+django-filter = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 pre-commit = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.11"
