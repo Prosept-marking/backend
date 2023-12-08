@@ -2,8 +2,7 @@ name: Prosept workflows
 
 on:
   push:
-    branches:
-      - develop
+    branches: [ 'master', 'main', 'develop' ]
 
 jobs:
   tests:
