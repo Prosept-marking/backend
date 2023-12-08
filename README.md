@@ -6,6 +6,7 @@
 Полезные ссылки:
 - Swagger: http://prosept.hopto.org/swagger/
 - Archive project: https://disk.yandex.com.am/d/-Ih7A6b707sy8A
+- Видео работы: https://skrinshoter.ru/vNBYGa4Kpqt?a
 
 
 
